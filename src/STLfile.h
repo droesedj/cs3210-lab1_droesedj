@@ -13,42 +13,20 @@
 #define SRC_STLFILE_H_
 
 #include<iostream>
+#include<fstream>
+#include<string>
+#include<sstream>
 using namespace std;
 
 
-class Vertex{
-	float x,y,z;
-	Vertex next;
-public:
-	Vertex(float x_, float y_, float z_);
-	float getX() {return x;}
-	float getY() {return y;}
-	float getZ() {return z;}
-};
+class Vertex;
+class Facet;
+class Solid;
 
+extern void parseSTLFile(string file);
 
-class Facet{
-	int numVerts;
-	Vertex firstVert;
-	Facet next;
-public:
-	Facet(Vertex startVert);
-	int getNumVerts() {return numVerts;}
-	Vertex getVertex(int vertIndex);
-	Vertex getFirstVertex() {return firstVert;}
-};
-
-
-class Solid{
-	string name;
-	int numFacets;
-	Facet firstFacet;
-public:
-	Solid(string name_, Facet startFacet);
-	string getName() {return name;}
-	Facet getFacet(int facetIndex);
-	Facet getFacetStart() {return firstFacet;}
-};
-
+Solid parseSolid(string data);
+Facet parseFacet(string data);
+Vertex parseVertex(string data);
 
 #endif /* SRC_STLFILE_H_ */
