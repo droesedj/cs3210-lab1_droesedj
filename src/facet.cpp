@@ -17,9 +17,9 @@ using namespace std;
 	 * Counts the number of vertices within this facet.
 	 * @return Number of vertices.
 	 */
-	int Facet::countVertsInChain(){
+	int facet::countVertsInChain(){
 		int count = 0;
-		Vertex* iter = firstVert;
+		vertex* iter = firstVert;
 
 		while(iter->getNext() != nullptr){
 			count += 1;
@@ -30,7 +30,7 @@ using namespace std;
 	}
 
 
-	Facet::Facet(double nx, double ny, double nz) {
+	facet::facet(double nx, double ny, double nz) {
 		firstVert = nullptr;
 		numVerts = new int;
 		nx_ = new double(nx);
@@ -39,7 +39,7 @@ using namespace std;
 		next = nullptr;
 	}
 
-	Facet::Facet() {
+	facet::facet() {
 		firstVert = nullptr;
 		nx_ = nullptr;
 		ny_ = nullptr;
@@ -48,15 +48,15 @@ using namespace std;
 		next = nullptr;
 	}
 
-	int Facet::getNumVerts() {return *numVerts;}
+	int facet::getNumVerts() {return *numVerts;}
 
-	Vertex* Facet::getFirstVertex() {return firstVert;}
+	vertex* facet::getFirstVertex() {return firstVert;}
 
 	/**
 	 * Replaces the current vertex chain with a specified one.
 	 * @param first New vertex chain.
 	 */
-	void Facet::setFirstVertex(Vertex* first) {
+	void facet::setFirstVertex(vertex* first) {
 		firstVert = first;
 		*numVerts = countVertsInChain();
 	}
@@ -65,21 +65,21 @@ using namespace std;
 	 * Gets a pointer to the next facet in the chain.
 	 * @return A pointer to the next facet in the chain.
 	 */
-	Facet* Facet::getNext() {return (Facet*)(next);}
+	facet* facet::getNext() {return (facet*)(next);}
 
 	/**
 	 * Sets the pointer of the next facet in the chain.
 	 * @param nextFacet Facet to be added to the chain.
 	 * DESTRUCTIVE! DO NOT REPLACE EXISTING VALUES!
 	 */
-	void Facet::setNext(Facet* nextFacet) {
+	void facet::setNext(facet* nextFacet) {
 		if(next == nullptr){
 			next = nextFacet;
 		}
 	}
 
 	/// Destructor
-	Facet::~Facet(){
+	facet::~facet(){
 		delete next;
 		delete firstVert;
 		delete numVerts;

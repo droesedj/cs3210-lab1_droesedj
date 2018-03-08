@@ -9,35 +9,45 @@
  *
  =============================================*/
 
+/**
+ * Vertex Class
+ *
+ * Represents a Vertex read in from an STL file.
+ * Also knows if any vertices follow it.
+ *
+ * Uses a linked-list structure to keep track of connected vertices.
+ */
+
+
 #include "STLfile.h"
 
 using namespace std;
 
-	Vertex::Vertex(double x, double y, double z) {
+	vertex::vertex(double x, double y, double z) {
 		x_ = new double(x);
 		y_ = new double(y);
 		z_ = new double(z);
 		next = nullptr;
 	}
 
-	Vertex::Vertex() {
+	vertex::vertex() {
 		x_ = new double;
 		y_ = new double;
 		z_ = new double;
 		next = nullptr;
 	}
 
-	double Vertex::getX() {return *x_;}
-	double Vertex::getY() {return *y_;}
-	double Vertex::getZ() {return *z_;}
+	double vertex::getX() {return *x_;}
+	double vertex::getY() {return *y_;}
+	double vertex::getZ() {return *z_;}
 
-	Vertex* Vertex::getNext() {return (Vertex*)(next);}
+	vertex* vertex::getNext() {return (vertex*)(next);}
 
-	void Vertex::setX(double x) {*x_ = x;}
-	void Vertex::setY(double y) {*y_ = y;}
-	void Vertex::setZ(double z) {*z_ = z;}
+	void vertex::setX(double x) {*x_ = x;}
+	void vertex::setY(double y) {*y_ = y;}
+	void vertex::setZ(double z) {*z_ = z;}
 
-	void Vertex::setNext(Vertex* nextVert) {
+	void vertex::setNext(vertex* nextVert) {
 		if(next == nullptr){
 			next = nextVert;
 		}
@@ -45,14 +55,10 @@ using namespace std;
 
 
 	/// Destructor
-	Vertex::~Vertex(){
-
-
+	vertex::~vertex(){
 		delete next;
 		delete x_;
 		delete y_;
 		delete z_;
-
-
 	}
 

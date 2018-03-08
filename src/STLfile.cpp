@@ -24,13 +24,13 @@ using namespace std;
  * Assumes that the file has proper formatting.
  * This WILL hang if the file does not have proper formatting.
  */
-Solid* parseSTLFile(string file){
-	Solid* output = nullptr;
-	Vertex* vertexHead = nullptr;
-	Facet* facetHead = nullptr;
+solid* parseSTLFile(string file){
+	solid* output = nullptr;
+	vertex* vertexHead = nullptr;
+	facet* facetHead = nullptr;
 
-	Vertex* vertIterator = nullptr;
-	Facet* faceIterator = nullptr;
+	vertex* vertIterator = nullptr;
+	facet* faceIterator = nullptr;
 
 	string line;
 	ifstream STL (file);
@@ -100,12 +100,12 @@ Solid* parseSTLFile(string file){
  * @param data Line of text to be read in.
  * @return Pointer to a newly-created Solid.
  */
-Solid* parseSolid(string data){
+solid* parseSolid(string data){
 	string name;
 	string garbage;
 	stringstream(data) >> garbage >> name;
 
-	return new Solid(name);
+	return new solid(name);
 }
 
 /**
@@ -115,12 +115,12 @@ Solid* parseSolid(string data){
  * @param data Line of text to be read in.
  * @return Pointer to a newly-created Facet.
  */
-Facet* parseFacet(string data){
+facet* parseFacet(string data){
 	string garbage;
 	double x,y,z;
 	stringstream(data) >> garbage >> garbage >> x >> y >> z;
 
-	return new Facet(x,y,z);
+	return new facet(x,y,z);
 }
 
 /**
@@ -130,24 +130,24 @@ Facet* parseFacet(string data){
  * @param data
  * @return Pointer to the newly-created Vertex.
  */
-Vertex* parseVertex(string data){
+vertex* parseVertex(string data){
 	double f1, f2, f3;
 	string garbage;
 
 	stringstream(data) >> garbage >> f1 >> f2 >> f3;
 
-	return new Vertex(f1, f2, f3);
+	return new vertex(f1, f2, f3);
 }
 
 /**
  * A really lazy way of retrieving a whole bunch of data from a Solid.
  * @param obj Pointer to a solid object to get data from.
  */
-void printSolidData(Solid* obj){
+void printSolidData(solid* obj){
 	// Facet/vertex output:
 
-	Facet* facetIter;
-	Vertex* vertexIter;
+	facet* facetIter;
+	vertex* vertexIter;
 	int facetNum = 1;
 
 	if(obj->getFacetStart() != nullptr && obj->getFacetStart()->getFirstVertex() != nullptr){

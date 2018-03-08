@@ -5,7 +5,7 @@
  * @date March 7 2018
  * @author Dennis Droese
  *
- * Header for an object representing the contents of an STL file.
+ * Header for several classes representing the contents of an STL file.
  *
  =============================================*/
 
@@ -25,7 +25,7 @@ using namespace std;
  * Represents a Vertex read in from an STL file.
  * Also knows if any vertices follow it.
  */
-class Vertex {
+class vertex {
 
 	/// X-coordinate of vertex
 	double* x_;
@@ -37,22 +37,22 @@ class Vertex {
 	double* z_;
 
 	/// Pointer to the next vertex.  nullptr if this is the last vertex in the chain.
-	Vertex* next;
+	vertex* next;
 
 public:
-	Vertex(double x, double y, double z);
-	Vertex();
+	vertex(double x, double y, double z);
+	vertex();
 	double getX();
 	double getY();
 	double getZ();
-	Vertex* getNext();
+	vertex* getNext();
 	void setX(double x);
 	void setY(double y);
 	void setZ(double z);
-	void setNext(Vertex* nextVert);
+	void setNext(vertex* nextVert);
 
 	/// Destructor.
-	~Vertex();
+	~vertex();
 };
 
 /**
@@ -61,7 +61,7 @@ public:
  * Represents a Facet read in from an STL file.
  * Also knows if any Facets follow it.
  */
-class Facet{
+class facet{
 
 	/// x-direction of the facet's normal.
 	double* nx_;
@@ -76,10 +76,10 @@ class Facet{
 	int* numVerts;
 
 	/// First vertex in the facet.
-	Vertex* firstVert;
+	vertex* firstVert;
 
 	/// Pointer to the next facet.  nullptr if this is the last facet in the chain.
-	Facet* next;
+	facet* next;
 
 	/**
 	 * Counts the number of vertices within this facet.
@@ -88,32 +88,32 @@ class Facet{
 	int countVertsInChain();
 
 public:
-	Facet(double nx, double ny, double nz);
-	Facet();
+	facet(double nx, double ny, double nz);
+	facet();
 	int getNumVerts();
-	Vertex* getFirstVertex();
+	vertex* getFirstVertex();
 
 	/**
 	 * Replaces the current vertex chain with a specified one.
 	 * @param first New vertex chain.
 	 */
-	void setFirstVertex(Vertex* first);
+	void setFirstVertex(vertex* first);
 
 	/**
 	 * Gets a pointer to the next facet in the chain.
 	 * @return A pointer to the next facet in the chain.
 	 */
-	Facet* getNext();
+	facet* getNext();
 
 	/**
 	 * Sets the pointer of the next facet in the chain.
 	 * @param nextFacet Facet to be added to the chain.
 	 * DESTRUCTIVE! DO NOT REPLACE EXISTING VALUES!
 	 */
-	void setNext(Facet* nextFacet);
+	void setNext(facet* nextFacet);
 
 	/// Destructor.
-	~Facet();
+	~facet();
 };
 
 
@@ -122,7 +122,7 @@ public:
  *
  * Represents a solid object described by an STL file.
  */
-class Solid{
+class solid{
 
 	/// Name of the solid.
 	string* name_;
@@ -134,7 +134,7 @@ class Solid{
 	int* numTotalVerts;
 
 	/// First facet in the solid.
-	Facet* firstFacet;
+	facet* firstFacet;
 
 	/// Minimum recorded x-coordinate
 	double* x_min;
@@ -168,12 +168,12 @@ class Solid{
 	void processCoords();
 
 public:
-	Solid();
-	Solid(string name);
+	solid();
+	solid(string name);
 	string getName();
 	int getTotalVerts();
 	int getNumFacets();
-	Facet* getFacetStart();
+	facet* getFacetStart();
 	double getXMin();
 	double getXMax();
 	double getYMin();
@@ -190,10 +190,10 @@ public:
 	 * @param start First facet in the chain.
 	 * DESTRUCTIVE!!! DO NOT REPLACE EXISTING VALUES!!!
 	 */
-	void setStartFacet(Facet* start);
+	void setStartFacet(facet* start);
 
 	/// Destructor
-	~Solid();
+	~solid();
 };
 
 /**
@@ -204,13 +204,13 @@ public:
  * Assumes that the file has proper formatting.
  * This WILL hang if the file does not have proper formatting.
  */
-extern Solid* parseSTLFile(string file);
+extern solid* parseSTLFile(string file);
 
 /**
  * A really lazy way of retrieving a whole bunch of data from a Solid.
  * @param obj Pointer to a solid object to get data from.
  */
-extern void printSolidData(Solid* obj);
+extern void printSolidData(solid* obj);
 
 /**
  * Parses a solid from a given line of input data
@@ -219,7 +219,7 @@ extern void printSolidData(Solid* obj);
  * @param data Line of text to be read in.
  * @return Pointer to a newly-created Solid.
  */
-Solid* parseSolid(string data);
+solid* parseSolid(string data);
 
 /**
  * Parses a facet from a given line of input data.
@@ -228,7 +228,7 @@ Solid* parseSolid(string data);
  * @param data Line of text to be read in.
  * @return Pointer to a newly-created Facet.
  */
-Facet* parseFacet(string data);
+facet* parseFacet(string data);
 
 /**
  * Parses a vertex from a given line of input data.
@@ -237,6 +237,6 @@ Facet* parseFacet(string data);
  * @param data
  * @return Pointer to the newly-created Vertex.
  */
-Vertex* parseVertex(string data);
+vertex* parseVertex(string data);
 
 #endif /* SRC_STLFILE_H_ */

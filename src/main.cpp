@@ -20,7 +20,7 @@ int main(int argc, char**argv){
 		return 0;
 	}
 
-	Solid* myOBJ = parseSTLFile(argv[1]);
+	solid* myOBJ = parseSTLFile(argv[1]);
 
 	if(myOBJ != nullptr){
 		printSolidData(myOBJ);

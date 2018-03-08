@@ -16,13 +16,13 @@ using namespace std;
 	/**
 	 * This method refreshes the min/max coordinate values and lengths of the solid.
 	 */
-	void Solid::processCoords() {
+	void solid::processCoords() {
 		if(firstFacet != nullptr && firstFacet->getFirstVertex() != nullptr){
-			Facet* facetIter;
+			facet* facetIter;
 
 			facetIter = firstFacet;
 
-			Vertex* vertexIter = facetIter->getFirstVertex();
+			vertex* vertexIter = facetIter->getFirstVertex();
 
 			// init the notable dimensions to the first vert's values.
 			*x_min = vertexIter->getX();
@@ -56,7 +56,6 @@ using namespace std;
 				facetIter = facetIter->getNext();
 				vertexIter = facetIter->getFirstVertex();
 			}
-
 			//update dimensions
 			*x_len = *x_max - *x_min;
 			*y_len = *y_max - *y_min;
@@ -64,7 +63,7 @@ using namespace std;
 		}
 	}
 
-	Solid::Solid(){
+	solid::solid(){
 		firstFacet = nullptr;
 		name_ = new string;
 		x_min = new double;
@@ -80,7 +79,7 @@ using namespace std;
 		z_len = new double;
 	}
 
-	Solid::Solid(string name){
+	solid::solid(string name){
 		firstFacet = nullptr;
 		name_ = new string(name);
 		x_min = new double;
@@ -96,34 +95,32 @@ using namespace std;
 		z_len = new double;
 	}
 
-	string Solid::getName() {return *name_;}
-	int Solid::getTotalVerts() {return *numTotalVerts;}
-	int Solid::getNumFacets() {return *numFacets;}
-	Facet* Solid::getFacetStart() {return firstFacet;}
+	string solid::getName() {return *name_;}
+	int solid::getTotalVerts() {return *numTotalVerts;}
+	int solid::getNumFacets() {return *numFacets;}
+	facet* solid::getFacetStart() {return firstFacet;}
+	double solid::getXMin() {return *x_min;}
+	double solid::getXMax() {return *x_max;}
+	double solid::getYMin() {return *y_min;}
+	double solid::getYMax() {return *y_max;}
+	double solid::getZMin() {return *z_min;}
+	double solid::getZMax() {return *z_max;}
+	double solid::getXLength() {return *x_len;}
+	double solid::getYLength() {return *y_len;}
+	double solid::getZLength() {return *z_len;}
 
-	double Solid::getXMin() {return *x_min;}
-	double Solid::getXMax() {return *x_max;}
-	double Solid::getYMin() {return *y_min;}
-	double Solid::getYMax() {return *y_max;}
-	double Solid::getZMin() {return *z_min;}
-	double Solid::getZMax() {return *z_max;}
-
-	double Solid::getXLength() {return *x_len;}
-	double Solid::getYLength() {return *y_len;}
-	double Solid::getZLength() {return *z_len;}
-
-	void Solid::setName(string name) {*name_ = name;}
+	void solid::setName(string name) {*name_ = name;}
 
 	/**
 	 * Sets the start of the facet chain.
 	 * @param start First facet in the chain.
 	 * DESTRUCTIVE!!! DO NOT REPLACE EXISTING VALUES!!!
 	 */
-	void Solid::setStartFacet(Facet* start){
+	void solid::setStartFacet(facet* start){
 		firstFacet = start;
 		int count = 0;
 		int countFaces = 0;
-		Facet* iter = start;
+		facet* iter = start;
 
 		while(iter->getNext() != nullptr){
 			count += iter->getNumVerts();
@@ -140,8 +137,7 @@ using namespace std;
 	}
 
 	/// Destructor
-	Solid::~Solid(){
-
+	solid::~solid(){
 		delete firstFacet;
 		delete name_;
 		delete numTotalVerts;
@@ -155,5 +151,4 @@ using namespace std;
 		delete x_len;
 		delete y_len;
 		delete z_len;
-
 	}
