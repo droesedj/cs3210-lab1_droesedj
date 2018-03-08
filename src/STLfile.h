@@ -23,7 +23,8 @@ class Vertex;
 class Facet;
 class Solid;
 
-extern void parseSTLFile(string file);
+extern Solid* parseSTLFile(string file);
+extern void printSolidData(Solid* obj);
 
 Solid* parseSolid(string data);
 Facet* parseFacet(string data);
