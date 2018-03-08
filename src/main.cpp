@@ -16,7 +16,7 @@ using namespace std;
 int main(int argc, char**argv){
 
 	if(argc < 2){
-		cout << "Usage: cs3210-lab1_droesedj <filename>\n";
+		cout << "Usage: " << argv[0] << " <filename>\n";
 		return 0;
 	}
 
