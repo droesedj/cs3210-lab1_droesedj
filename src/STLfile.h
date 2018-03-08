@@ -25,8 +25,8 @@ class Solid;
 
 extern void parseSTLFile(string file);
 
-Solid parseSolid(string data);
-Facet parseFacet(string data);
-Vertex parseVertex(string data);
+Solid* parseSolid(string data);
+Facet* parseFacet(string data);
+Vertex* parseVertex(string data);
 
 #endif /* SRC_STLFILE_H_ */

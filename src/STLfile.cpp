@@ -162,12 +162,28 @@ public:
 		y_len = 0;
 		z_len = 0;
 	}
+	Solid(string name){
+			name_ = name;
+			x_min = 0;
+			x_max = 0;
+			y_min = 0;
+			y_max = 0;
+			z_min = 0;
+			z_max = 0;
+			numTotalVerts = 0;
+			numFacets = 0;
+			x_len = 0;
+			y_len = 0;
+			z_len = 0;
+		}
 
 	string getName() {return name_;}
 	int getTotalVerts() {return numTotalVerts;}
 	int getNumFacets() {return numFacets;}
 	Facet getFacet(int facetIndex);
 	Facet getFacetStart() {return firstFacet;}
+
+	void setName(string name) {name_ = name;}
 
 	void setFacetStart(Facet start){
 		firstFacet = start;
@@ -178,12 +194,16 @@ public:
 
 
 void parseSTLFile(string file){
+	Solid* output = NULL;
+	Vertex* vertexHead = NULL;
+	Facet* facetHead = NULL;
+
+	void* vertIterator;
+	void* faceIterator;
+
+	int numVerts = 0;
 
 
-	bool solid = false;
-	bool facet = false;
-
-//	Solid output;
 	cout << "STARTING PARSER" << '\n';
 	string line;
 	ifstream STL ("word.stl");
@@ -193,21 +213,25 @@ void parseSTLFile(string file){
 			while(line[start] == ' '){
 				start += 1;
 			}
-			string delim = " ";
-			string word = line.substr(start, line.find(delim, start)+start);
+			string word;
+			stringstream(line) >> word;
+
 			if(word.compare("solid") == 0){
-				//output = parseSolid(line);
-				solid = true;
+				output = parseSolid(line);
 				cout << "PARSING A SOLID!!!" << '\n';
-			} else if(word.substr(0,word.find(delim)).compare("facet") == 0){
-				facet = true;
+			} else if(word.compare("facet") == 0){
 				cout << "PARSING A FACET" << '\t' << line << '\n';
-			} else if(word.substr(0,word.find(delim)).compare("vertex") == 0){
+			} else if(word.compare("outer") == 0){
+				cout << "PARSING A LOOP" << '\t' << line << '\n';
+			} else if(word.compare("vertex") == 0){
 				cout << "PARSING A VERTEX:" << '\t' << line << '\n';
-			}else if(word.substr(0,word.find(delim)).compare("endfacet") == 0){
+				parseVertex(line);
+			}else if(word.compare("endfacet") == 0){
 				cout << "PARSING END OF FACET" << '\n';
-			} else if(word.substr(0,word.find(delim)).compare("endsolid") == 0){
+			} else if(word.compare("endsolid") == 0){
 				cout << "PARSING END OF SOLID!" << '\n';
+			} else if(word.compare("endloop") == 0){
+				cout << "PARSING END OF LOOP!" << '\n';
 			} else {
 				cout << "COULD NOT FIGURE OUT WHAT " << word << " IS SUPPOSED TO BE!" << '\n';
 			}
@@ -216,16 +240,33 @@ void parseSTLFile(string file){
 	}
 }
 
-/*
-Solid parseSolid(string data){
 
+Solid* parseSolid(string data){
+	string name;
+	string garbage;
+	stringstream(data) >> garbage >> name;
+
+	Solid* output = new Solid(name);
+	return output;
 }
 
-Facet parseFacet(string data){
+Facet* parseFacet(string data){
+	string garbage;
+	float x,y,z;
+	stringstream(data) >> garbage >> garbage >> x >> y >> z;
 
+	return new Facet(x,y,z);
 }
 
-Vertex parseVertex(string data){
+Vertex* parseVertex(string data){
+	float f1;
+	float f2;
+	float f3;
 
+	string word;
+
+	stringstream(data) >> word >> f1 >> f2 >> f3;
+
+	return new Vertex(f1, f2, f3);
 }
-*/
+
